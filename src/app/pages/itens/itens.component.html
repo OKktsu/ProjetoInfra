@@ -1,0 +1,230 @@
+<div class="content">
+    <header>
+        <div class="alerta-filtro">                 
+            <h1 class="sub-titulo"><i class="bi bi-folder"></i>Itens</h1>
+            <div class="filtros">
+                <button class="btn-padrao filtro"> <i class="bi bi-funnel"></i> Filtro</button>
+                <div class="buscar-container">
+                    <input type="text"
+                    ><i class="bi bi-search"></i>
+                </div>
+            </div>
+            <div class="pagination">
+                <button 
+                (click)="previousPage()" 
+                [disabled]="currentPage === 1">
+                <i class="bi bi-chevron-left"></i> 
+                </button>
+
+                <span class="page-info">
+                    {{currentPage}} de {{totalPages}}
+                </span>
+
+                <button 
+                (click)="nextPage()" 
+                [disabled]="currentPage === totalPages">
+                 <i class="bi bi-chevron-right"></i>
+                </button>
+
+                <button class="button-add"
+                (click)="AbrirModaladd()">
+                 <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="alertas">
+            <div class="sector-container">
+                <div class="sector-tabs">
+                    <button 
+                    *ngFor="let sector of sectors" 
+                    class="sector-tab"
+                    [class.active]="currentSector === sector.id"
+                    [style.border-top-color]="currentSector === sector.id ? sector.color : 'transparent'"
+                    (click)="switchSector(sector.id)">
+                    <span class="sector-name">{{sector.name}}</span>
+                    </button>
+                </div>
+                <div class="setor-add"><button><i class="bi bi-plus-circle"></i></button></div>
+            </div>
+            <div class="table-container">
+                <table *ngIf=" currentSector === 'geral'">
+                    <thead>
+                        <tr>
+                            <th>Nome do Produto</th>
+                            <th>ID do Produto</th>
+                            <th>Estoque</th>
+                            <th>Tipo</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of currentPageItems; let i = index" >
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div>
+                                        <div class="product-name">{{item.name}}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="product-id">{{item.id}}</span></td>
+                            <td><span class="stock">{{item.stock}}</span></td>
+                            <td><span class="type">{{item.type}}</span></td>
+                            <td><span class="status" [ngClass]="item.status">{{item.statusText}}</span></td>
+                            <td>
+                               <div class="action-btn-container">
+                                    <button class="action-btn" (click)="openAcoes(i)"><i class="bi bi-three-dots"></i></button>
+                                    <div class="dropdown-menu" *ngIf="openMenuIndex === i">
+                                        <button>Editar</button>
+                                        <button (click)="abrirModal(item)">Ver Detalhes</button>
+                                        <button (click)="abrirModalExcluir()" class="excluir">Excluir</button>
+                                    </div>
+                               </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table *ngIf="currentSector != 'geral'">
+                    <thead>
+                        <tr>
+                            <th>Nome do Produto</th>
+                            <th>ID do Produto</th>
+                            <th>Estoque</th>
+                            <th>Tipo</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of sectorStocks[currentSector]; let i = index" >
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div>
+                                        <div class="product-name">{{item.name}}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="product-id">{{item.id}}</span></td>
+                            <td><span class="stock">{{item.stock}}</span></td>
+                            <td><span class="type">{{item.type}}</span></td>
+                            <td><span class="status" [ngClass]="item.status">{{item.statusText}}</span></td>
+                            <td>
+                               <div class="action-btn-container">
+                                    <button class="action-btn" (click)="openAcoes(i)"><i class="bi bi-three-dots"></i></button>
+                                    <div class="dropdown-menu" *ngIf="openMenuIndex === i">
+                                        <button>Editar</button>
+                                        <button (click)="abrirModal(item)">Ver Detalhes</button>
+                                        <button class="excluir">Excluir</button>
+                                        <!-- <button><a href="/historico">historico</a> </button> -->
+                                    </div>
+                               </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="overlay" *ngIf="overlay"></div>
+<div class="modal" *ngIf="openModal">
+    <header class="modal-header">
+        <h2 class="titulo">Detalhes</h2>
+        <button class="fechar-modal" (click)="abrirModal(null)"><i class="bi bi-x-lg"></i></button>
+    </header>
+    <hr>
+    <main>
+        <div class="input-container">
+            <label>Nome</label>
+            <input class="product-name" type="text" [value]="itemSelecionado.name" disabled>
+        </div>
+        <span class="status" [ngClass]="itemSelecionado.status">{{itemSelecionado.statusText}}</span>    
+        <div class="input-container">
+            <label>ID</label>
+            <input type="text" [value]="itemSelecionado.id" disabled>
+        </div>    
+        <div class="input-container">
+            <label>Quantidade em estoque</label>
+            <input type="text" [value]="itemSelecionado.stock" disabled>
+        </div>    
+        <div class="input-container">
+            <label>Tipo</label>
+            <input type="text" [value]="itemSelecionado.type" disabled>
+        </div>  
+        <div class="input-container textarea">
+            <label>Observações</label>
+            <textarea name="" id=""></textarea>
+        </div>  
+    </main>
+</div>
+<div class="modal" *ngIf="openModalAdd">
+    <header class="modal-header">
+        <h2 class="titulo">Adicionar itens</h2>
+        <button class="fechar-modal" (click)="AbrirModaladd()"><i class="bi bi-x-lg"></i></button>
+    </header>
+    <hr>
+    <main>
+        <div class="input-container">
+            <label>Nome</label>
+            <input class="product-name" type="text" >
+        </div>
+        <span class="status" ></span>    
+        <div class="input-container">
+            <label>ID</label>
+            <input type="text" >
+        </div>    
+        <div class="input-container">
+            <label>Quantidade em estoque</label>
+            <input type="text">
+        </div>    
+        <div class="input-container">
+            <label for="editType">Tipo</label>
+            <select id="editType"  class="form-select">
+            <option value="Periférico">Periférico</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Computador">Computador</option>
+            <option value="Audio">Audio</option>
+            <option value="Armazenamento">Armazenamento</option>
+            <option value="Componente">Componente</option>
+            <option value="Rede">Rede</option>
+            <option value="Impressora">Impressora</option>
+            <option value="Gabinete">Gabinete</option>
+            <option value="Refrigeração">Refrigeração</option>
+            <option value="Tablet">Tablet</option>
+            <option value="Smartphone">Smartphone</option>
+            <option value="Acessório">Acessório</option>
+            <option value="Cabo">Cabo</option>
+            <option value="Energia">Energia</option>
+            </select>
+        </div>
+
+        <!-- Status -->
+        <div class="input-container">
+            <label for="editStatus">Status</label>
+            <select id="editStatus"  class="form-select">
+            <option value="active">Ativo</option>
+            <option value="pending">Pendente</option>
+            <option value="inactive">Inativo</option>
+            <option value="maintenance">Manutenção</option>
+            <option value="on-sale">Em Oferta</option>
+            </select>
+        </div>
+        <div class="input-container textarea">
+            <label>Observações</label>
+            <textarea name="" id=""></textarea>
+        </div>  
+    </main>
+</div>
+<div class="modal modal-excluir" *ngIf="openModalExcluir">
+    <header class="modal-header">
+        <h2 class="titulo">Excuir Item?</h2>
+        <button class="fechar-modal" (click)="abrirModalExcluir()"><i class="bi bi-x-lg"></i></button>
+    </header>
+    <main>
+        <button class="btn-padrao">Não</button>
+        <button class="btn-padrao modal-excluir-button">Sim</button>
+    </main>
+</div>

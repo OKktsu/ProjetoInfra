@@ -1,0 +1,53 @@
+.modal-acao{
+    position: absolute;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10;
+    min-width: 140px;
+}
+.dropdown-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+}
+.dropdown-menu button:hover {
+    background: #f8f9fa;
+}
+.dropdown-menu button:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.dropdown-menu button:last-child {
+    border-radius: 0 0 6px 6px;
+}
+.action-btn-container{
+    position: relative;
+}
+.excluir{
+    color: var(--color-excluir);
+}
+.btn-padrao.modal-excluir-button{
+    background-color: color-mix(in srgb, var(--color-excluir) 70%, white);
+    color: #fff;
+    &:hover{
+        background-color: var(--color-excluir) !important;
+    }
+}
+.modal-excluir > main{
+    justify-content: center;
+    button{
+        width: 40%;
+    }
+}

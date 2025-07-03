@@ -1,0 +1,21 @@
+<div class="content">
+    <div class="login-container">
+        <i class="bi bi-person-fill"></i>    
+        <div class="inputs-container">
+            <h2 class="sub-titulo">
+                Login de Usuario
+            </h2>
+            <div class="input-container">
+                <label>Login</label>
+                <input type="text">
+            </div>
+            <div class="input-container">
+                <label>Senha</label>
+                <input type="{{visivel}}">
+                <i class="{{iconSenha}}" (click)="mostrarSenha()"></i>
+            </div>
+            <button class="btn-padrao">LOGIN</button>
+            <p  class="esqueceu-senha">Esqueceu a <a href="/">senha?</a></p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,198 @@
+<div class="content">
+    <header>
+        <div class="alerta-filtro">                 
+            <h1 class="sub-titulo"><i class="bi bi-clock-history"></i>Histórico</h1>
+            <div class="filtros">
+                <button class="btn-padrao filtro"> <i class="bi bi-funnel"></i> Filtro</button>
+                <div class="buscar-container">
+                    <input type="text"
+                    ><i class="bi bi-search"></i>
+                </div>
+            </div>
+            <div class="pagination">
+                <button 
+                (click)="previousPage()" 
+                [disabled]="currentPage === 1">
+                <i class="bi bi-chevron-left"></i> 
+                </button>
+
+                <span class="page-info">
+                    {{currentPage}} de {{totalPages}}
+                </span>
+
+                <button 
+                (click)="nextPage()" 
+                [disabled]="currentPage === totalPages">
+                 <i class="bi bi-chevron-right"></i>
+                </button>
+
+                <button class="button-add" (click)="expandirModalAdd()">
+                 <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="sector-container">
+            <div class="sector-tabs">
+                <button 
+                *ngFor="let sector of sectors" 
+                class="sector-tab"
+                [class.active]="currentSector === sector.id"
+                [style.border-top-color]="currentSector === sector.id ? sector.color : 'transparent'"
+                (click)="switchSector(sector.id)">
+                <span class="sector-name">{{sector.name}}</span>
+                </button>
+            </div>
+        </div>
+        <div class="historico" *ngIf="currentSector =='historico'">
+            <div class="header"><h2 class="sub-titulo">Teclado Mecânico RGB</h2></div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>pessoa</th>
+                            <th>estado</th>
+                            <th>motivo</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of currentPageItems; let i = index">
+                        <tr>
+                            <td><span class="product-id">{{item.id}}</span></td>
+                            <td><span class="stock">{{item.pessoa}}</span></td>
+                            <td><span class="type">{{item.estado}}</span></td>
+                            <td><span class="stock">{{item.motivo}}</span></td>
+                            <td>
+                               <div class="action-btn-container">
+                                    <button class="action-btn" (click)="expandirSubTablea(i)"><i class="bi bi-chevron-down"></i></button>
+                               </div>
+                            </td>
+                        </tr>
+                        <tr  class="sub-tabela" ngClass="teste-{{i}}" style="display: none;" >
+                            <td colspan="6">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>data</th>
+                                            <th>pessoa</th>
+                                            <th>estado</th>
+                                            <th>motivo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let item of currentPageItems; let i = index">
+                                        <tr>
+                                            <td><span class="product-id">{{item.data}}</span></td>
+                                            <td><span class="stock">{{item.pessoa}}</span></td>
+                                            <td><span class="type">{{item.estado}}</span></td>
+                                            <td><span class="stock">{{item.motivo}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="informacoes" *ngIf="currentSector == 'informações'">
+            <div class="header"><h2 class="sub-titulo">Teclado Mecânico RGB</h2></div>
+            <div class="informacoes-content">
+                <div class="input-container">
+                    <label>Nome</label>
+                    <input class="product-name" type="text" value="Teclado Mecânico RGB" disabled>
+                </div>  
+                <div class="input-container">
+                    <label>Quantidade em estoque</label>
+                    <input type="text"  >
+                </div>    
+                <div class="input-container">
+                    <label>Tipo</label>
+                    <select id="editType"  class="form-select" disabled>
+                    <option value="Periférico">Periférico</option>
+                    <option value="Monitor">Monitor</option>
+                    <option value="Computador">Computador</option>
+                    <option value="Audio">Audio</option>
+                    <option value="Armazenamento">Armazenamento</option>
+                    <option value="Componente">Componente</option>
+                    <option value="Rede">Rede</option>
+                    <option value="Impressora">Impressora</option>
+                    <option value="Gabinete">Gabinete</option>
+                    <option value="Refrigeração">Refrigeração</option>
+                    <option value="Tablet">Tablet</option>
+                    <option value="Smartphone">Smartphone</option>
+                    <option value="Acessório">Acessório</option>
+                    <option value="Cabo">Cabo</option>
+                    <option value="Energia">Energia</option>
+                    </select>
+                </div>
+                <div class="input-container textarea">
+                    <label>Observações</label>
+                    <textarea name="" id=""></textarea>
+                </div>  
+            </div>
+        </div>
+    </main>
+</div>
+<div class="overlay" *ngIf="overlay"></div>
+<div class="modal" *ngIf="modalAdd">
+    <header class="modal-header">
+        <h2 class="titulo">Adicionar Movimentação</h2>
+        <button class="fechar-modal" (click)="expandirModalAdd()"><i class="bi bi-x-lg"></i></button>
+    </header>
+    <hr>
+    <main>
+        <div class="input-container">
+            <label>Nome</label>
+            <input class="product-name" type="text" value="Teclado Mecânico RGB" disabled>
+        </div>
+        <div class="input-container">
+            <label>ID</label>
+            <input type="text"  >
+        </div>    
+        <div class="input-container">
+            <label>Quantidade em estoque</label>
+            <input type="text"  >
+        </div>    
+        <div class="input-container">
+            <label>Tipo</label>
+            <select id="editType"  class="form-select">
+            <option value="Periférico">Periférico</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Computador">Computador</option>
+            <option value="Audio">Audio</option>
+            <option value="Armazenamento">Armazenamento</option>
+            <option value="Componente">Componente</option>
+            <option value="Rede">Rede</option>
+            <option value="Impressora">Impressora</option>
+            <option value="Gabinete">Gabinete</option>
+            <option value="Refrigeração">Refrigeração</option>
+            <option value="Tablet">Tablet</option>
+            <option value="Smartphone">Smartphone</option>
+            <option value="Acessório">Acessório</option>
+            <option value="Cabo">Cabo</option>
+            <option value="Energia">Energia</option>
+            </select>
+        </div>
+
+        <!-- Status -->
+        <div class="input-container">
+            <label for="editStatus">Status</label>
+            <select id="editStatus"  class="form-select">
+            <option value="active">Ativo</option>
+            <option value="pending">Pendente</option>
+            <option value="inactive">Inativo</option>
+            <option value="maintenance">Manutenção</option>
+            <option value="on-sale">Em Oferta</option>
+            </select>
+        </div>
+        <div class="input-container textarea">
+            <label>Observações</label>
+            <textarea name="" id=""></textarea>
+        </div>  
+    </main>
+</div>

@@ -1,0 +1,59 @@
+header{
+    border-bottom: 1px solid var(--bordas);
+}
+.alerta-filtro{
+    gap: 12%;
+    justify-content: start;
+}
+.cards-container{
+    margin: 24px auto;
+    display: flex;
+    width: 95%;
+    background-color: #fff;
+    height: auto;
+    border: 1px solid var(--bordas);
+    border-radius: 4px;
+    & > div{
+        height: 100%;
+        width: calc(100% / 4);
+        border-right: 1px solid var(--bordas);
+    }
+    & > :last-child{
+        border: none;
+    }
+}
+.card{
+    margin: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    .legenda{
+        color: var(--color-font2);
+    }
+    .quantidade{
+        font-family: "Handlee", cursive;
+        color: var(--color-primary);
+        font-size: 3.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+}
+.container{
+    width: 95%;
+    margin: auto;
+    .sub-titulo {
+        background-color: #fff;
+        width: min-content;
+        padding: 4px 16px;
+        border: 1px solid var(--bordas);
+        border-bottom: none;
+        margin-bottom: -1px;
+        z-index: 2;
+        position: relative;
+        border-radius: 8px 8px 0 0;
+    }
+}
+.table-container{
+    width: 60%;
+    border-top: 1px solid var(--bordas);
+    z-index: 1;
+}

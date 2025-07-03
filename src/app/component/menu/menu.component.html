@@ -1,0 +1,27 @@
+<main *ngIf="verificarRota()">
+    <div class="logo">
+        
+    </div>
+    <hr >
+    <div class="links">
+        <a href="#" class="link" [ngClass]="verificarPagina('/') ? 'active': ''">
+            <i class="bi bi-house"></i>
+            <p>Home</p>
+        </a>
+        <a href="itens" class="link" [ngClass]="verificarPagina('/itens') ? 'active': ''">
+            <i class="bi bi-folder"></i>
+            <p>Itens</p>
+        </a>
+        <a href="historico" class="link" [ngClass]="verificarPagina('/historico') ? 'active': ''">
+            <i class="bi bi-clock-history"></i>
+            <p>Histórico</p>
+        </a>
+    </div>
+    <hr>
+    <div class="sair">
+        <a href="login" class="link ">
+            <i class="bi bi-power"></i>            
+            <p>Sair</p>
+        </a>
+    </div>
+</main>

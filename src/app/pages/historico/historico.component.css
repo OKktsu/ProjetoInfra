@@ -1,0 +1,48 @@
+.historico{
+    width: 100%;
+    background-color: #fff;
+    height: 70vh;
+    border-bottom: 1px solid var(--bordas);
+}
+.informacoes{
+    width: 100%;
+    background-color: #fff;
+    height: 70vh;
+    border-bottom: 1px solid var(--bordas);
+}
+.header{
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sub-tabela{
+    td{
+        background-color: #fdfdfd;
+        padding: 0 0 16px 16px;
+        table{
+            border: 1px solid var(--bordas);
+            border-top: none;
+            background-color: #fff;
+            border-radius: 5px;
+            td{
+                background-color: #fff;
+                padding: 5px 16px;
+            }
+            tr{
+                background-color: #fff;
+            }
+            th{
+                padding: 8px 20px;
+            }
+        }
+    }    
+}
+.informacoes-content{
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 900px;
+    padding: 24px;
+}
